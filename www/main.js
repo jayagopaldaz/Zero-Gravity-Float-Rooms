@@ -136,8 +136,8 @@ function entrance(){
   if(inside.alpha<.01) inside.visible=false;
   else inside.visible=true;
   
-  if(me.alertStrength>0){
-    t=255-Math.floor((Math.sin(.005*curTime2)+1)*64);
+  if(me.alertStrength>.1){
+    t=255-Math.floor((Math.sin(.005*curTime2)+1)*64*me.alertStrength);
     t=t.toString(16);
     if(t.length==1) t="0"+t;
     inside.tint="0xff"+t+t;
