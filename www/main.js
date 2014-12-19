@@ -72,8 +72,10 @@ function bobble(){
     y=winH*.36*Math.sin(theta.t+Math.PI*2/maxTanks*t)+1*Math.sin(theta.ty+t);
     tank[t].move(x,y);
     try{ tank[t].el.light.alpha=tank[t].el.light.alpha*.95+dataObj.tank[t].light*.05; } catch(e){}
-    try{ tank[t].alertStrength=tank[t].alertStrength*.95+dataObj.tank[t].alert*.05; } catch(e){}
-    tank[t].el.tint=alertColorCode(tank[t].alertStrength);
+    try{ if(dataObj.tank[t].alert>0) tank[t].alertStrengthTarget=1-(Math.cos(.005*curTime)+1)*.35;
+      else tank[t].alertStrengthTarget=0; }catch(e){}
+    tank[t].alertStrength=tank[t].alertStrength*.95+tank[t].alertStrengthTarget*.05; 
+    tank[t].el.tint=alertColorCode(tank[t].alertStrength);    
     tank[t].el.tankName.style.fill=whitenText(tank[t].alertStrength,"1c677c");
     tank[t].el.useText.style.fill=whitenText(tank[t].alertStrength,"6a7d82");
     tank[t].el.lUse.style.fill=whitenText(tank[t].alertStrength,"6a7d82");
@@ -86,14 +88,7 @@ function bobble(){
   }
 }
 
-var alertTime=-1;
 function alertColorCode(n){
-  if(n>.9){
-    curTime=new Date();
-    if(alertTime==-1) alertTime=curTime;
-    curTime-=alertTime;
-    n-=(Math.cos(.005*alertTime-3.141)+1)*.35;
-  }else alertTime=-1;
   n=Math.floor((1-n)*255);
   gb=n.toString(16);
   if(gb.length==1) gb="0"+gb;
@@ -279,6 +274,7 @@ function Tank(name){
   this.temp=0;
   this.time=0;
   this.alertStrength=0;
+  this.alertStrengthTarget=0;
   
   this.el=PIXI.Sprite.fromImage("bubble.png");
   this.el.anchor={x:.5,y:.5};
