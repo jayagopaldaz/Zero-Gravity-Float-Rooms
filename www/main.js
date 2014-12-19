@@ -215,7 +215,7 @@ function initStage(){
   
   inBlink=new PIXI.Sprite.fromImage("white.png");
   inBlink.anchor={x:.5,y:.5};
-  inBlink.alpha=1;
+  inBlink.alpha=0;
   inBlink.tint="0xff0000";
   
   vOffset=-250;
