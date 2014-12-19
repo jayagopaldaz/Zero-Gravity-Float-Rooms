@@ -90,7 +90,7 @@ var alertTime=-1;
 function alertColorCode(n){
   if(n>.9){
     curTime=new Date();
-    if(alertTime=-1) alertTime=curTime;
+    if(alertTime==-1) alertTime=curTime;
     curTime-=alertTime;
     n-=(Math.cos(.005*alertTime-3.141)+1)*.35;
   }else alertTime=-1;
@@ -228,13 +228,16 @@ function initStage(){
   button=[];
   bText=["60 MINUTE","90 MINUTE","CUSTOM"];
   for(i=0;i<3;i++){
-    button[i]=PIXI.Sprite.fromImage("shadow.png");
+    button[i]=PIXI.Sprite.fromImage("bubble.png");
     button[i].posTarg={x:400*(i-1),y:0};
     button[i].anchor={x:.5,y:.5};
     button[i].alpha=0;
-    button[i].text=new PIXI.Text(bText[i]+"\nFLOAT", {font:'bold 30px TeluguMN', fill:'#5395a7', align:'center'});
-    button[i].text.anchor={x:.5,y:.5};
-    button[i].addChild(button[i].text);
+    text=new PIXI.Text(bText[i]+"\nFLOAT", {font:'bold 30px TeluguMN', fill:'#5395a7', align:'center'});
+    text.anchor={x:.5,y:.5};
+    shadow=PIXI.Sprite.fromImage("shadow.png");
+    shadow.anchor={x:.5,y:.5};
+    button[i].addChild(text);
+    button[i].addChild(shadow);
   }
   
   gear=PIXI.Sprite.fromImage("gear.png");
