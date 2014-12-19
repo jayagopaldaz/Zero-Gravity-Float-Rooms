@@ -1,0 +1,27 @@
+body{
+  padding:0px;
+  margin:0px;
+  background:#444;
+  overflow:hidden;
+}
+
+canvas{
+  position:absolute;
+  left:0;
+  top:0;
+  z-index:10000;
+}
+
+@font-face {
+  font-family:TeluguMN;
+  src:url(TeluguMN.ttf);
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family:TeluguMN;
+  src:url(TeluguMN-Bold.ttf);
+  font-weight: bold;
+  font-style: normal;
+}
