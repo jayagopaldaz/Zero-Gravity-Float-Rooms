@@ -176,9 +176,10 @@ function initStage(){
   logo.dblTap=-1;
   logo.click=logo.tap=function(){
     now=new Date();
-    if(this.dblTap==-1){ this.dblTap=new Date(); return; }
-    else if(now-this.dblTap>200){ this.dblTap=-1; return; }
-    ipAndPort=prompt("AJAX Server IP & Port:","192.168.0.11:8081");
+    if(now-this.dblTap>200){ this.dblTap=now; return; }
+    this.dblTap=now;
+    ipTemp=prompt("AJAX Server IP & Port:","192.168.0.11:8081");
+    if(ipTemp) ipAndPort="http://"+ipTemp;
   }
   
   inside=PIXI.Sprite.fromImage("white.png");
