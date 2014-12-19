@@ -86,7 +86,14 @@ function bobble(){
   }
 }
 
+var alertTime=-1;
 function alertColorCode(n){
+  if(n>.9){
+    curTime=new Date();
+    if(alertTime=-1) alertTime=curTime;
+    curTime-=alertTime;
+    n-=(Math.cos(.005*alertTime-3.141)+1)*.35;
+  }else alertTime=-1;
   n=Math.floor((1-n)*255);
   gb=n.toString(16);
   if(gb.length==1) gb="0"+gb;
@@ -133,6 +140,14 @@ function entrance(){
   inside.alpha=s/9;
   if(inside.alpha<.01) inside.visible=false;
   else inside.visible=true;
+  
+  if(me.alertStrength>0){
+    t=255-Math.floor((Math.sin(.005*curTime2)+1)*64);
+    t=t.toString(16);
+    if(t.length==1) t="0"+t;
+    inside.tint="0xff"+t+t;
+  } else inside.tint="0xffffff";
+
   for(i=1,j=insideStage.children.length;i<j;i++){
     me=insideStage.children[i];
     me.alpha=s/3;
