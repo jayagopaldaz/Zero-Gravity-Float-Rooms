@@ -1,4 +1,5 @@
-﻿var ipAndPort='http://192.168.0.11:8081';
+﻿//var ipAndPort='http://192.168.0.11:8081';
+var ipAndPort='http://72.182.7.206:8081';
 var pause=false;
 var loaded=0;
 var winW,winH;
@@ -40,6 +41,7 @@ var maxTanks=4;
 function init(){
   var imageAssets=[
     "bg.jpg",
+    "bgInside.jpg",
     "logo.png",
     "gear.png",
     "help.png"
@@ -131,19 +133,22 @@ function entrance(){
   me.el.alpha=1-s/9;
   inside.x=x;
   inside.y=y;
+  inBlink.x=x;
+  inBlink.y=y;
   inside.scale={x:(s+1)*280/150,y:(s+1)*280/150};
+  inBlink.scale={x:(s+1)*280/150,y:(s+1)*280/150};
   inside.alpha=s/9;
+  inTexture.alpha=s/9;
+  //inBlink.alpha=s/9;
   if(inside.alpha<.01) inside.visible=false;
   else inside.visible=true;
   
   if(me.alertStrength>0){
-    t=255-Math.floor((Math.sin(.005*curTime2)+1)*64*me.alertStrength);
-    t=t.toString(16);
-    if(t.length==1) t="0"+t;
-    inside.tint="0xff"+t+t;
-  } else inside.tint="0xffffff";
-
-  for(i=1,j=insideStage.children.length;i<j;i++){
+    t=(Math.sin(.005*curTime2)+1)*.25*me.alertStrength;
+    inBlink.alpha=t;
+  } else inBlink.alpha=0;
+  
+  for(i=3,j=insideStage.children.length;i<j;i++){
     me=insideStage.children[i];
     me.alpha=s/3;
     if(me.alpha>1) me.alpha=1;
@@ -188,8 +193,8 @@ function initStage(){
     now=new Date();
     if(now-this.dblTap>200){ this.dblTap=now; return; }
     this.dblTap=now;
-    ipTemp=prompt("AJAX Server IP & Port:","192.168.0.11:8081");
-    if(ipTemp) ipAndPort="http://"+ipTemp;
+    ipTemp=prompt("AJAX Server IP & Port:",ipAndPort);
+    if(ipTemp) ipAndPort=ipTemp;
   }
   
   inside=PIXI.Sprite.fromImage("white.png");
@@ -204,6 +209,15 @@ function initStage(){
     clickTime=new Date();
   }
 
+  inTexture=new PIXI.Sprite.fromImage("bgInside.jpg");
+  inTexture.anchor={x:.5,y:.5};
+  inTexture.alpha=0;
+  
+  inBlink=new PIXI.Sprite.fromImage("white.png");
+  inBlink.anchor={x:.5,y:.5};
+  inBlink.alpha=1;
+  inBlink.tint="0xff0000";
+  
   vOffset=-250;
   tankName=new PIXI.Text("TEMPORARY", {font:'bold 110px TeluguMN', fill:'#1c677c', align:'center'});
   tankName.posTarg={x:0,y:vOffset};
@@ -251,6 +265,8 @@ function initStage(){
   foundation.addChild(insideStage);
   
   insideStage.addChild(inside);
+  insideStage.addChild(inTexture);
+  insideStage.addChild(inBlink);
   insideStage.addChild(tankName);
   insideStage.addChild(tankTimes);
   insideStage.addChild(tankTemp);
