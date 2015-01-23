@@ -37,8 +37,8 @@ setInterval(function(){
 function formattedFinish(obj){
   var now=new Date();
   var finish=new Date(now.getTime() + obj.m*60000+obj.s*1000);
-  var h = addZero(d.getHours());
-  var m = addZero(d.getMinutes());
+  var h = addZero(finish.getHours());
+  var m = addZero(finish.getMinutes());
   var ampm=" AM";
   if(h>12){ h-=12; ampm=" PM"; }
   if(m<10) m="0"+m;
