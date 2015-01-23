@@ -29,16 +29,17 @@ setInterval(function(){
   }
   if(insideTank!=-1){
     if(!tank[insideTank].time) tankTimes.setText("NOT IN USE");
-    else tankTimes.setText(tank[insideTank].time+" • "+formattedFinish(this));
+    else tankTimes.setText(tank[insideTank].time+" • "+formattedFinish(tank[insideTank]));
     tankTemp.setText(tank[insideTank].temp);
   }
 }, 500);
 
 function formattedFinish(obj){
+  if(!obj.m || !obj.s) return "-";
   var now=new Date();
   var finish=new Date(now.getTime() + obj.m*60000+obj.s*1000);
-  var h = addZero(finish.getHours());
-  var m = addZero(finish.getMinutes());
+  var h = finish.getHours();
+  var m = finish.getMinutes();
   var ampm=" AM";
   if(h>12){ h-=12; ampm=" PM"; }
   if(m<10) m="0"+m;
@@ -345,6 +346,8 @@ function Tank(name){
   }
   
   this.setData=function(time,temp){
+    this.time=time;
+    this.temp=temp;
     if(time==false){ this.el.useText.setText("NOT IN USE"); this.el.lUse.setText(""); this.el.rUse.setText(""); }
     else{ this.el.useText.setText(""); this.el.lUse.setText(time); this.el.rUse.setText(formattedFinish(this)); }
   }
