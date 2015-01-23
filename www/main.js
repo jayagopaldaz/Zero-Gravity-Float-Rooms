@@ -28,20 +28,22 @@ setInterval(function(){
     tank[t].s=s;
   }
   if(insideTank!=-1){
-    var now=new Date();
-    var finish=new Date(now.getTime() + this.m*60000+this.s*1000);
-    var h = addZero(d.getHours());
-    var m = addZero(d.getMinutes());
-    var ampm=" AM";
-    if(h>12){ h-=12; ampm=" PM"; }
-    if(m<10) m="0"+m;
-    finishFormated=h+":"+m+ampm;
     if(!tank[insideTank].time) tankTimes.setText("NOT IN USE");
-    else tankTimes.setText(tank[insideTank].time+" • "+finishFormated/*12:04 PM"*/);
+    else tankTimes.setText(tank[insideTank].time+" • "+formattedFinish(this));
     tankTemp.setText(tank[insideTank].temp);
   }
 }, 500);
 
+function formattedFinish(obj){
+  var now=new Date();
+  var finish=new Date(now.getTime() + obj.m*60000+obj.s*1000);
+  var h = addZero(d.getHours());
+  var m = addZero(d.getMinutes());
+  var ampm=" AM";
+  if(h>12){ h-=12; ampm=" PM"; }
+  if(m<10) m="0"+m;
+  return h+":"+m+ampm;
+}
 
 window.onload=init;
 
@@ -330,7 +332,7 @@ function Tank(name){
     tnw=this.tankName.width/30*110;
     tankTimes.posTarg.x=-tnw/2;
     tankTemp.posTarg.x=tnw/2;
-    tankTimes.setText(tank[this.n].time+" • 12:34 PM");
+    tankTimes.setText(tank[this.n].time+" • "+formattedFinish(tank[this.n]));
     tankTemp.setText(tank[this.n].temp);
     clickTime=new Date();
     insideTank=this.n;
@@ -343,12 +345,8 @@ function Tank(name){
   }
   
   this.setData=function(time,temp){
-    this.time=time;
-    this.temp=temp;
-    var now=new Date();
-    var finish=new Date(now.getTime() + this.m*60000+this.s*1000);
     if(time==false){ this.el.useText.setText("NOT IN USE"); this.el.lUse.setText(""); this.el.rUse.setText(""); }
-    else{ this.el.useText.setText(""); this.el.lUse.setText(time); this.el.rUse.setText(finish /*temp*/); }
+    else{ this.el.useText.setText(""); this.el.lUse.setText(time); this.el.rUse.setText(formattedFinish(this)); }
   }
 }
 
