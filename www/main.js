@@ -336,7 +336,7 @@ function Tank(name){
     this.time=time;
     this.temp=temp;
     if(time==false){ this.el.useText.setText("NOT IN USE"); this.el.lUse.setText(""); this.el.rUse.setText(""); }
-    else{ this.el.useText.setText(""); this.el.lUse.setText(time); this.el.rUse.setText("12:04 PM"/*temp*/); }
+    else{ this.el.useText.setText(""); this.el.lUse.setText(time); this.el.rUse.setText("12:A4 PM"/*temp*/); }
   }
 }
 
