@@ -28,8 +28,16 @@ setInterval(function(){
     tank[t].s=s;
   }
   if(insideTank!=-1){
+    var now=new Date();
+    var finish=new Date(now.getTime() + this.m*60000+this.s*1000);
+    var h = addZero(d.getHours());
+    var m = addZero(d.getMinutes());
+    var ampm=" AM";
+    if(h>12){ h-=12; ampm=" PM"; }
+    if(m<10) m="0"+m;
+    finishFormated=h+":"+m+ampm;
     if(!tank[insideTank].time) tankTimes.setText("NOT IN USE");
-    else tankTimes.setText(tank[insideTank].time+" • 12:04 PM");
+    else tankTimes.setText(tank[insideTank].time+" • "+finishFormated/*12:04 PM"*/);
     tankTemp.setText(tank[insideTank].temp);
   }
 }, 500);
