@@ -23,7 +23,7 @@ setInterval(function(){
     s$=s<10 ? "0"+s : s; 
     if(m+s>0) timeN=m+":"+s$
     else timeN=false;
-    tank[t].setData(timeN,"12:04 PM"); //tempN.toPrecision(3)+"°F");
+    tank[t].setData(timeN,tempN.toPrecision(3)+"°F");
   }
   if(insideTank!=-1){
     if(!tank[insideTank].time) tankTimes.setText("NOT IN USE");
@@ -336,7 +336,7 @@ function Tank(name){
     this.time=time;
     this.temp=temp;
     if(time==false){ this.el.useText.setText("NOT IN USE"); this.el.lUse.setText(""); this.el.rUse.setText(""); }
-    else{ this.el.useText.setText(""); this.el.lUse.setText(time); this.el.rUse.setText(temp); }
+    else{ this.el.useText.setText(""); this.el.lUse.setText(time); this.el.rUse.setText("12:04 PM"/*temp*/); }
   }
 }
 
